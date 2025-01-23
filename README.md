@@ -100,27 +100,106 @@
 
 ---
 
-## Network Performance Metrics
+Here is the content formatted in proper `README.md` syntax:
 
-### Key Metrics:
+# Network Performance Metrics
+
+## Key Metrics:
 1. **Delay (Latency):** How long it takes for a packet to travel from source to destination.
 2. **Loss:** The fraction of packets sent by the source that fail to reach the destination.
 3. **Throughput:** The rate at which data is received by the destination.
 
-### Delay Components:
-1. **Transmission Delay:** Time taken to push all bits of a packet onto the link.
-   - Formula:  
-     \( \text{Packet Transmission Delay} = \frac{L (\text{bits})}{R (\text{bits/sec})} \)  
-     where \( L \) is the packet size and \( R \) is the link bandwidth.
+---
 
-2. **Propagation Delay**
-3. **Queueing Delay**
-4. **Processing Delay**
+## Delay Components:
+1. **Transmission Delay:**  
+   Time taken to push all bits of a packet onto the link.  
+   **Formula:**  
+   ```
+   Packet Transmission Delay = L (bits) / R (bits/sec)
+   ```
+   Where:  
+   - `L` is the packet size.  
+   - `R` is the link bandwidth.  
+     Bandwidth refers to the maximum rate at which data can be transmitted over a network link in a given amount of time.
+
+2. **Propagation Delay:**  
+   How long it takes to move one bit from one end of the link to the other.  
+   **Formula:**  
+   ```
+   Propagation Delay = d (meters) / s (meters/sec)
+   ```
+   Where:  
+   - `d` is the link length (distance).  
+   - `s` is the propagation speed of the signal in the link medium.  
+
+   **Pipe View:** Transmission delay decreases as the bandwidth increases.
+
+3. **Queueing Delay:**  
+   How long a packet has to sit in a buffer before it is processed.  
+   - Queueing delay can vary significantly for the same router at different times (based on load).  
+   - Typically measured in microseconds (µs) or milliseconds (ms).  
+
+   **Transient Overload:**  
+   Refers to a temporary condition where the arrival rate of packets exceeds the service rate of the network device (e.g., a router or switch). This causes packets to queue up, leading to increased delays or even packet drops if the buffer becomes full.  
+
+   **Formula:**  
+   ```
+   Queueing Delay = Number of Packets * Transmission Delay
+   ```
+
+   ![Queueing Delay](problem3.png)
+
+4. **Processing Delay:**  
+   Time taken by the switch to process a packet.  
+   - When a packet arrives at a packet switch, the switch needs to perform some actions before putting it onto the output link.
 
 ---
 
-### Visual References:
+## Nodal Delay:
+The total time for a packet to reach the other end of the link.  
+**Formula:**  
+```
+d_nodal = d_proc + d_queue + d_trans + d_prop
+```
+
+For the total delay across multiple nodes:  
+```
+d_end_to_end = N * d_nodal
+```
+
+---
+
+## Loss:
+- What fraction of packets sent to the destination are dropped?
+
+---
+
+## Throughput:
+- At what rate (bits/time unit) is the destination receiving data from the source?  
+- **Formula:**  
+  ```
+  Throughput = F / T (bits/sec)
+  ```
+  Where:  
+  - `F` is the file size in bits.  
+  - `T` is the time in seconds.  
+
+  Throughput is always referred to on the destination side and is also known as **goodput**.
+
+---
+
+## Goals:
+- **Low latency**
+- **Low loss rate**
+- **High throughput**
+
+---
+
+## Visual References:
 - **Circuit and Packet Switching Problem:**  
   ![Circuit and Packet Switching Problem](problem1.png)
 - **Transmission Delay:**  
   ![Transmission Delay](problem2.png)
+- **Prefix Refresher:**  
+  ![Prefix Refresher](prefix_refresher.png)
