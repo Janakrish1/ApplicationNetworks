@@ -67,3 +67,60 @@
 
 ### Packet Forwarding
 - The router receives a packet from one link and **forwards** it to another attached communication link.
+
+
+# Network Sharing Methods
+
+## Two Ways to Share Switched Networks
+
+### 1. Circuit Switching
+- **Definition:** End-to-end resources are allocated and reserved for a flow from source to destination. The process involves:
+  - The source sends a request to the destination.
+  - Switches create circuits after performing admission control.
+
+- **Techniques:**
+  - **Time Division Multiplexing (TDM):** Time is divided into slots, and data is sent only during its allocated slot.
+  - **Frequency Division Multiplexing (FDM):** Optical or electromagnetic frequencies are divided into bands, and data is sent within a specific narrow band.
+
+- **Phases of Circuit Switching:**
+  1. **Circuit Establishment**
+  2. **Data Transfer**
+  3. **Circuit Teardown**
+
+### 2. Packet Switching
+- **Definition:** Data is broken down into smaller chunks called packets. Each packet contains destination information and is treated independently.
+
+- **Advantages:**
+  - Simpler to implement.
+  - Efficient use of network resources.
+
+- **Disadvantages:**
+  - Requires buffer management.
+  - Needs congestion control.
+
+---
+
+## Network Performance Metrics
+
+### Key Metrics:
+1. **Delay (Latency):** How long it takes for a packet to travel from source to destination.
+2. **Loss:** The fraction of packets sent by the source that fail to reach the destination.
+3. **Throughput:** The rate at which data is received by the destination.
+
+### Delay Components:
+1. **Transmission Delay:** Time taken to push all bits of a packet onto the link.
+   - Formula:  
+     \( \text{Packet Transmission Delay} = \frac{L (\text{bits})}{R (\text{bits/sec})} \)  
+     where \( L \) is the packet size and \( R \) is the link bandwidth.
+
+2. **Propagation Delay**
+3. **Queueing Delay**
+4. **Processing Delay**
+
+---
+
+### Visual References:
+- **Circuit and Packet Switching Problem:**  
+  ![Circuit and Packet Switching Problem](problem1.png)
+- **Transmission Delay:**  
+  ![Transmission Delay](problem2.png)
