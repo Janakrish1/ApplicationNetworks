@@ -100,8 +100,6 @@
 
 ---
 
-Here is the content formatted in proper `README.md` syntax:
-
 # Network Performance Metrics
 
 ## Key Metrics:
@@ -203,3 +201,77 @@ d_end_to_end = N * d_nodal
   ![Transmission Delay](problem2.png)
 - **Prefix Refresher:**  
   ![Prefix Refresher](prefix_refresher.png)
+
+# Layered Internet Protocol Stack
+
+## Overview of Layers
+1. **Application Layer**: Supports network applications (e.g., HTTP, DNS, SMTP).
+2. **Transport Layer**: Handles process-to-process data transfer (e.g., TCP, UDP).
+3. **Network Layer**: Manages routing of datagrams from source to destination (e.g., IP, routing protocols).
+4. **Link Layer**: Transfers data between neighboring network elements (e.g., Ethernet, WiFi).
+5. **Physical Layer**: Transmits raw bits "on the wire."
+
+---
+
+## Key Concepts
+
+### Data Exchange Across Layers
+1. **Application Layer**: Exchanges messages to implement application services using the transport layer.
+2. **Transport Layer**:
+   - Transfers messages `M` from one process to another using the services of the network layer.
+   - Encapsulates the application layer message `M` with a transport layer header `Ht` to create a transport layer segment.
+3. **Network Layer**:
+   - Encapsulates the transport-layer segment `[Ht | M]` with a network-layer header `Hn` to create a network-layer datagram.
+   - Transfers the transport-layer segment `[Ht | M]` from one host to another using link-layer services.
+4. **Link Layer**:
+   - Transfers datagrams `[Hn | Ht | M]` from one host to a neighboring host.
+   - Encapsulates the network-layer datagram `[Hn | Ht | M]` with a link-layer header `Hl` to create a link-layer frame.
+
+---
+
+## Network Application
+A **network application** is composed of two or more processes running in end systems that exchange messages over a network to achieve a specific goal.
+
+- Programs use the **socket API** to send messages.
+
+---
+
+## Socket
+A **socket** is the interface between the application layer and the transport layer.
+
+### Specifying Data Destination:
+1. **Service**: Transport layer protocol (e.g., TCP or UDP).
+2. **IP Address**: A 32-bit address uniquely identifying the host.
+3. **Port**: A number (0–65535) identifying the socket.
+
+**Analogy**:  
+- **IP Address** = Building Address.  
+- **Port** = Office Number.
+
+---
+
+## Transport Services
+
+### 1. **UDP (User Datagram Protocol)**
+- Best-effort, unreliable data transfer.
+- Allows sending as much data as needed (e.g., live streaming).
+- No recovery of lost packets.
+
+### 2. **TCP (Transmission Control Protocol)**
+- Connection-oriented, reliable, and in-order data transfer.
+- Guarantees sent data is received.
+- Includes **congestion control** to throttle sending when the network is overloaded.
+
+**Congestion Control**:  
+Manages and regulates network traffic to prevent congestion. Congestion occurs when demand exceeds network capacity, leading to packet loss, delays, and reduced performance.
+
+---
+
+## Network Application Architectures
+
+### 1. **Client-Server Architecture**
+- A **server** process handles requests from **clients** (users).
+
+### 2. **Peer-to-Peer (P2P) Architecture**
+- No dedicated servers.
+- **Peers** communicate directly with each other.
