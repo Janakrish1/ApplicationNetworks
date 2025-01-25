@@ -275,3 +275,133 @@ Manages and regulates network traffic to prevent congestion. Congestion occurs w
 ### 2. **Peer-to-Peer (P2P) Architecture**
 - No dedicated servers.
 - **Peers** communicate directly with each other.
+
+# World Wide Web (WWW)
+
+## Overview
+- The WWW is a distributed database of components and resources linked through HTTP (Hypertext Transfer Protocol).
+
+## Web Pages
+- Web pages consist of objects.
+- A typical web page includes a base HTML file and several referenced objects.
+- Each object is identified by a URL (Uniform Resource Locator).
+
+**URL Format**:  
+`protocol://host-name[:port]/directory-path/resource`  
+**Example**:  
+`http://www.example.com/some-example-path/image.png`
+
+---
+
+## Accessing Web Pages
+- **Client-Server Architecture** with TCP transport.
+- Web browsers (clients) request web pages from web servers.
+- HTTP defines the communication protocol between web browsers and servers.
+
+### HTTP Communication Steps
+1. User enters URL: `http://www.example.com/some-example-path/image.png`
+2. Client initiates a TCP connection to the server at `www.example.com` on port 80.
+3. Server listening on port 80 accepts the connection.
+4. Client sends an HTTP request for the object (`some-example-path/image.png`) over the TCP connection.
+5. Server responds with an HTTP response message containing the requested object.
+
+---
+
+## HTTP Request Message Format
+- **Request Line**: Specifies the method, resource, and protocol version.  
+  Example: `GET /somedir/page.html HTTP/1.1`
+- **Header Lines**: Provide information or modify the request.  
+  Example:  
+  ```
+  HOST: www.example.com  
+  User-agent: Mozilla/4.0  
+  Connection: close  
+  Accept-language: fr
+  ```
+- **Body**: Optional data (e.g., for "POST" requests).
+
+### Method Types
+1. **GET, HEAD**  
+   - Retrieve information.  
+   - `HEAD` is like `GET` but excludes the object.  
+   - User data can be included in the URL.  
+     Example: `http://www.example.com/animalsearch?monkeys&banana`
+
+2. **POST**  
+   - Sends data to the server (e.g., web forms).
+
+3. **PUT**  
+   - Uploads a file in the request's entity body to the specified path in the URL.
+
+4. **DELETE**  
+   - Deletes the file specified in the URL.
+
+---
+
+## Difference Between PUT and POST
+- **PUT**:  
+  - Used to update or create a resource.  
+  - Idempotent: Making the same PUT request multiple times will produce the same result.
+
+- **POST**:  
+  - Used to send data to a server to create a new resource.  
+  - Not idempotent: Repeating the same POST request may result in multiple resources being created.
+
+---
+
+## HTTP Response Message Format
+- **Status Line**: Protocol version, status code, status phrase.  
+  Example: `HTTP/1.1 200 OK`
+- **Response Headers**: Provide additional information.
+- **Body**: Contains optional data (e.g., requested object).
+
+### Common HTTP Status Codes
+- **200 OK**: Request succeeded; the requested object is in the response.
+- **301 Moved Permanently**: Object moved; the new location is provided.
+- **400 Bad Request**: Request not understood by the server.
+- **404 Not Found**: Requested document not found on the server.
+- **505 HTTP Version Not Supported**: Server does not support the HTTP protocol version used.
+
+---
+
+## HTTP Characteristics
+- **Stateless Protocol**:  
+  - Servers do not retain state information.  
+  - **Pros**: Improves scalability on the server side.  
+  - **Cons**: Persistent state is needed for some applications.
+
+### Retaining State: Cookies
+- **Client-Side State Maintenance**:  
+  - Client stores small pieces of state for the server.  
+  - Sends state data in future requests.  
+- **Uses of Cookies**:  
+  - Authorization.  
+  - Shopping carts.  
+  - User session state (e.g., web emails).
+
+---
+
+## HTTP Performance
+- **RTT (Round Trip Time)**: Time for a packet to travel from client to server and back.  
+- **HTTP Response Time (Per Object)**:  
+  - 1 RTT to initiate a TCP connection.  
+  - 1 RTT for HTTP request and first bytes of HTTP response.  
+  - File transmission time.  
+  **Formula**:  
+  `HTTP Response Time = 2 * RTT + File Transmission Time`
+
+### Connection Types
+1. **Non-Persistent HTTP**  
+   - Separate TCP connection for each object.  
+   - **Optimization**: Use parallel connections to reduce response time.
+
+2. **Persistent HTTP**  
+   - Maintains TCP connection across multiple requests.  
+
+### Response Times for Retrieving `n` Small Objects
+| Connection Type              | Response Time                  |
+|------------------------------|---------------------------------|
+| Non-Persistent Serial        | `2 * RTT * n`                 |
+| Non-Persistent (m Parallel)  | `2 * RTT * (n/m)`             |
+| Persistent Non-Pipelined     | `(1 + n) * RTT`               |
+| Persistent Pipelined         | `2 * RTT` (for first requests) |
